@@ -3,6 +3,7 @@ from users.api_endpoints import *
 from .views import say_hello
 
 
+app_name = 'users'
 urlpatterns = [
     path('hello/', say_hello, name='hello'),
     path('login/', LoginAPIView.as_view(), name='login'),
@@ -10,4 +11,5 @@ urlpatterns = [
     path('logout/', LogoutAPIView.as_view(), name='logout'),
     path('register/', RegisterAPIView.as_view(), name='register'),
     path('change-user-info/', ChangeUserInfoAPIView.as_view(), name='change-user-info'),
+    path('change-password/', ChangePasswordAPIView.as_view(), name='change-password'),
 ]

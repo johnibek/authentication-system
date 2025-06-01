@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # local apps
     'users',
+    'admin_app',
 ]
 
 SIMPLE_JWT = {
@@ -87,9 +88,6 @@ REST_FRAMEWORK = {
 
 SWAGGER_SETTINGS = {
    'SECURITY_DEFINITIONS': {
-      'Basic': {
-            'type': 'basic'
-      },
       'Bearer': {
             'type': 'apiKey',
             'name': 'Authorization',
@@ -106,6 +104,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'config.middleware.RoleRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from users.models import User
-
+from users.utils import log_user_activity
 
 class LoginSerializer(serializers.ModelSerializer):
     username = serializers.CharField(write_only=True, required=True)
@@ -21,6 +21,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
+        request = self.context.get('request')
         username = validated_data.get('username')
         password = validated_data.get('password')
 
@@ -29,5 +30,7 @@ class LoginSerializer(serializers.ModelSerializer):
             raise ValidationError(detail="Invalid credentials.", code='user-not-found')
         if not user.check_password(password):
             raise ValidationError(detail="Invalid credentials.", code='wrong-password')
+
+        log_user_activity(request, user, 'login')
 
         return user.tokens

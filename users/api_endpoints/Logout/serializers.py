@@ -2,6 +2,8 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from users.utils import log_user_activity
+
 
 class LogoutSerializer(serializers.Serializer):
     refresh_token = serializers.CharField(write_only=True)
@@ -32,11 +34,14 @@ class LogoutSerializer(serializers.Serializer):
 
 
     def create(self, validated_data):
+        request = self.context.get('request')
         refresh_token = validated_data.get('refresh_token')
 
         token = RefreshToken(refresh_token)
 
         token.blacklist()
+
+        log_user_activity(request, request.user, 'logout')
 
         return {
             'success': True,

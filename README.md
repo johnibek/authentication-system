@@ -54,4 +54,4 @@ DB_PORT=5432
 ### Open swagger documentation
 http://127.0.0.1:8000/swagger/
 
-Now you are ready to try the endpoints. Good luck :)
+Now you are ready to try the APIs. Good luck :)
